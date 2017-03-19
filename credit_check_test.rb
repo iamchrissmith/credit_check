@@ -35,23 +35,11 @@ class CreditCheckTest < MiniTest::Test
     number = 11
     assert_equal 2, ccheck.combine_large(number)
   end
-  def test_process_doubling
-    ccheck = CreditCheck.new
-    number = "2"
-    index = 0
-    assert_equal 2, ccheck.process_number_to_double(number, index)
-    number = "2"
-    index = 1
-    assert_equal 4, ccheck.process_number_to_double(number, index)
-    number = "8"
-    index = 1
-    assert_equal 7, ccheck.process_number_to_double(number, index)
-  end
   def test_doubles_every_second_digit_after_reverse
     ccheck = CreditCheck.new
     number = %w(5 4 3 2 1 0 9 8)
-    new_number = [5,8,3,4,1,0,9,7]
-    assert_equal ccheck.collect_double_numbers(number), new_number
+    new_number = [5,8,3,4,1,0,9,16]
+    assert_equal ccheck.collect_doubled_numbers(number), new_number
   end
   def test_validate_returns_true
     ccheck = CreditCheck.new

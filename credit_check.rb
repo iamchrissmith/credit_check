@@ -23,26 +23,20 @@ class CreditCheck
     large_text[0].to_i + large_text[1].to_i
   end
 
-  def process_number_to_double(num_text, index)
-      this_number = num_text.to_i
-      return this_number if index % 2 == 0
-
-      new_number = this_number * 2
-
-      new_number < 9 ? new_number : combine_large(new_number)
-  end
-
-  def collect_double_numbers(numbers)
+  def collect_doubled_numbers(numbers)
     numbers.map.with_index do |n,i|
-      process_number_to_double(n, i)
+      i % 2 == 0 ? n.to_i : n.to_i * 2
     end
   end
 
   def validate(number)
     reversed_number = reverse_number(number)
     split_numbers = split_string(reversed_number)
-    collected_numbers = collect_double_numbers(split_numbers)
-    sum = sum_array(collected_numbers)
+    doubled_numbers = collect_doubled_numbers(split_numbers)
+    combined_numbers = doubled_numbers.map do |n|
+      n.to_i < 9 ? n.to_i : combine_large(n.to_i)
+    end
+    sum = sum_array(combined_numbers)
     sum % 10 == 0
   end
 
